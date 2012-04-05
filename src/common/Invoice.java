@@ -8,8 +8,8 @@ import java.util.*;
  */
 public class Invoice {
     private int invoiceNo;
-    private Date date;
-    private String dueDate = "Due 30 days from date of invoice";
+    private Date invoiceDate;
+    private String dueDateMessage = "Due 30 days from date of invoice";
     private Customer customer;
     private List<LineItem> lineItems = new ArrayList<LineItem>();
     private double discount;
@@ -19,7 +19,7 @@ public class Invoice {
     public Invoice(Customer customer) {
         invoiceNo = Math.abs(new Random((new Date()).getTime()).nextInt());
         this.customer = customer;
-        date = new Date();
+        invoiceDate = new Date();
         discount = .10;
         tax = .05;
         minQtyForDiscount = 10;
@@ -29,7 +29,7 @@ public class Invoice {
         double qty = 0;
 
         for(LineItem item : lineItems) {
-            qty += item.getQty();
+            qty += item.getQuantity();
         }
 
         return qty;
@@ -39,7 +39,7 @@ public class Invoice {
         double netTotal = 0.00;
 
         for(LineItem item : lineItems) {
-            netTotal += item.getExtPrice();
+            netTotal += item.getNetCost();
         }
 
         return netTotal;
@@ -63,15 +63,15 @@ public class Invoice {
     }
 
     public Date getDate() {
-        return date;
+        return invoiceDate;
     }
 
     public double getDiscount() {
         return discount;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDueDateMessage() {
+        return dueDateMessage;
     }
 
     public int getInvoiceNo() {

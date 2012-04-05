@@ -8,24 +8,24 @@ import java.util.Random;
  * @author jlombardo
  */
 public class LineItem {
+
     private long id;
-    private String prodId;
-    private String prodName;
+    private String productId;
+    private String productName;
     private double unitCost;
-    private double qty;
-    private double extPrice;
+    private double quantity;
+    private double netCost;
 
     public LineItem() {
-
     }
 
     public LineItem(String prodId, String prodName, double unitCost, double qty) {
         id = new Random((new Date()).getTime()).nextLong();
-        this.prodId = prodId;
-        this.prodName = prodName;
+        this.productId = prodId;
+        this.productName = prodName;
         this.unitCost = unitCost;
-        this.qty = qty;
-        extPrice = unitCost * qty;
+        this.quantity = qty;
+        netCost = unitCost * qty;
     }
 
     @Override
@@ -50,12 +50,12 @@ public class LineItem {
         return hash;
     }
 
-    public double getExtPrice() {
-        return extPrice;
+    public double getNetCost() {
+        return netCost;
     }
 
-    public void setExtPrice(double extPrice) {
-        this.extPrice = extPrice;
+    public void setNetCost(double netCost) {
+        this.netCost = netCost;
     }
 
     public long getId() {
@@ -66,28 +66,28 @@ public class LineItem {
         this.id = id;
     }
 
-    public String getProdId() {
-        return prodId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setProdId(String prodId) {
-        this.prodId = prodId;
+    public void setProductId(String prodId) {
+        this.productId = prodId;
     }
 
-    public String getProdName() {
-        return prodName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public double getQty() {
-        return qty;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setQty(double qty) {
-        this.qty = qty;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public double getUnitCost() {
@@ -97,8 +97,8 @@ public class LineItem {
     public void setUnitCost(double unitCost) {
         this.unitCost = unitCost;
     }
-    
+
     public String toString() {
-        return prodName + ", " + qty + ", " + extPrice;
+        return productName + ", " + quantity + ", " + netCost;
     }
 }

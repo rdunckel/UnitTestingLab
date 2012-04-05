@@ -5,6 +5,7 @@ package common;
  * @author jlombardo
  */
 public class Customer {
+
     private String phone;
     private String name;
     private String address;
@@ -57,6 +58,12 @@ public class Customer {
     }
 
     public void setState(String state) {
+        if (state == null) {
+            throw new IllegalArgumentException("State cannot be null");
+        } else if (state.length() > 2 || state.length() < 2) {
+            throw new IllegalArgumentException("State must be two characters");
+        }
+
         this.state = state;
     }
 
