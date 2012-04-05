@@ -34,7 +34,11 @@ public class CustomerTest {
     @Test
     public void stateShoulBeTwoChars() {
         String state = "MI";
-        instance.setState(state);
+        try {
+            instance.setState(state);
+        } catch(IllegalArgumentException iae) {
+            fail("test failed due to iae");
+        }
 
         int expResult = 2;
         int result = instance.getState().length();
@@ -92,7 +96,7 @@ public class CustomerTest {
         Customer c1 = new Customer("Customer1", "444-444-4444");
         Customer c2 = new Customer("Customer2", "344-444-4444");
 
-        assertNotSame(c1, c2);
+        assertFalse(c1.equals(c2));
 
     }
 }

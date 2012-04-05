@@ -38,7 +38,8 @@ public class InvoiceTest {
     }
 
     /**
-     * Ensure net total is sum of all line items unit cost * quantity.
+     * Invoice net total should equal the sum of all line items unit cost *
+     * quantity.
      */
     @Test
     public void invoiceNetTotalShouldBeSumOfLineItemsUnitCostTimesQuantity() {
@@ -47,13 +48,28 @@ public class InvoiceTest {
         invoice.addLineItem(product2, 1); // 22.00 * 1 = 22.00
         invoice.addLineItem(product3, 3); // 42.99 * 3 = 128.97
 
-        System.out.println(invoice.getNetTotal());
-
         double expResult = 255.97; //253.0
-
         double result = invoice.getNetTotal();
 
         assertEquals(expResult, result, 0);
+    }
 
+    /**
+     * A discount should be applied to the invoice if there are at least 10
+     * items purchased.
+     */
+    @Test
+    public void discountShouldBeAppliedWhenAtLeast10ProductsArePurchased() {
+        invoice.addLineItem(product1, 4); // 52.50 * 4 = 210.00
+        invoice.addLineItem(product2, 3); // 22.00 * 3 = 66.00
+        invoice.addLineItem(product3, 5); // 42.99 * 5 = 214.95
+
+        double total = invoice.getNetTotal();
+        double discount = 0.10 * total;
+
+        double expResult = total - discount;
+        double result = invoice.getDiscountedTotal();
+
+        assertEquals(expResult, result, 0.001);
     }
 }

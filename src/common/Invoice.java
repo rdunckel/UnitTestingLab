@@ -7,12 +7,13 @@ import java.util.*;
  * @author jlombardo
  */
 public class Invoice {
+
     private int invoiceNo;
     private Date invoiceDate;
     private String dueDateMessage = "Due 30 days from date of invoice";
     private Customer customer;
     private List<LineItem> lineItems = new ArrayList<LineItem>();
-    private double discount;
+    private double discountPercentage;
     private double tax;
     private double minQtyForDiscount;
 
@@ -20,7 +21,7 @@ public class Invoice {
         invoiceNo = Math.abs(new Random((new Date()).getTime()).nextInt());
         this.customer = customer;
         invoiceDate = new Date();
-        discount = .10;
+        discountPercentage = .10;
         tax = .05;
         minQtyForDiscount = 10;
     }
@@ -28,7 +29,7 @@ public class Invoice {
     public double getTotalQty() {
         double qty = 0;
 
-        for(LineItem item : lineItems) {
+        for (LineItem item : lineItems) {
             qty += item.getQuantity();
         }
 
@@ -38,7 +39,7 @@ public class Invoice {
     public double getNetTotal() {
         double netTotal = 0.00;
 
-        for(LineItem item : lineItems) {
+        for (LineItem item : lineItems) {
             netTotal += item.getNetCost();
         }
 
@@ -46,8 +47,8 @@ public class Invoice {
     }
 
     public double getDiscountedTotal() {
-        if(getTotalQty() >= this.minQtyForDiscount) {
-            return getNetTotal() - discount;
+        if (getTotalQty() >= this.minQtyForDiscount) {
+            return getNetTotal() * (1 - discountPercentage);
         } else {
             return getNetTotal();
         }
@@ -67,7 +68,7 @@ public class Invoice {
     }
 
     public double getDiscount() {
-        return discount;
+        return discountPercentage;
     }
 
     public String getDueDateMessage() {
@@ -80,7 +81,7 @@ public class Invoice {
 
     public void addLineItem(Product p, int qty) {
         LineItem lineItem =
-            new LineItem(p.getProdId(), p.getProdName(), p.getUnitCost(), qty);
+                new LineItem(p.getProdId(), p.getProdName(), p.getUnitCost(), qty);
         lineItems.add(lineItem);
     }
 
@@ -91,6 +92,4 @@ public class Invoice {
     public double getTax() {
         return tax;
     }
-
-
 }
